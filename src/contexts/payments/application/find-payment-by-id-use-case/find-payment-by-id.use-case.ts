@@ -12,7 +12,7 @@ export class FindPaymentByIdUseCase {
     findPaymentByIdDto: FindPaymentByIdDto,
   ): Promise<{ payment: PrimitivePayment }> {
     const payment = await this.paymentRepository.getById(findPaymentByIdDto.id);
-    if (payment) {
+    if (!payment) {
       throw new PaymentNotFoundException(findPaymentByIdDto.id);
     }
     return {
