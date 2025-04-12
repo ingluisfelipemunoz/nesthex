@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { CreatePaymentUseCase } from 'src/contexts/payments/application/create-payment-use-case/create-payment-use-case';
 import { CreatePaymentHttpDto } from './create-payment.http-dto';
 import { PrimitivePayment } from 'src/contexts/payments/domain/payment';
@@ -8,7 +8,7 @@ export class CreatePaymentController {
 
   @Post()
   async createPayment(
-    @Body() createPaymentHttpDto: CreatePaymentHttpDto,
+    @Body(ValidationPipe) createPaymentHttpDto: CreatePaymentHttpDto,
   ): Promise<{ payment: PrimitivePayment }> {
     return await this.createPaymentUseCase.execute({
       amount: createPaymentHttpDto.amount,
